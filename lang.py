@@ -40,7 +40,9 @@ Do you want to have 80 crit chance anyway? [YES/NO]''',
 scorpion foil or reaper falchion are not included.
 Talisman results should still be correct.''',
     'shoulddeal': 'This setup should deal %s damage',  # round(damage)
-    'withoutcrit': '> %s without crit'  # round(non_crit)
+    'withoutcrit': '> %s without crit',  # round(non_crit)
+    'noroute': '''It\'s impossible for you to reach 100%% crit chance.
+Level up your combat and get more talismans before trying the optimizer again.'''
 }
 
 spanish = {
@@ -86,9 +88,7 @@ Coloca una en tu inventario e intenta de nuevo''',
 el Scorpion Foil o la Reaper Falchion no estan incluidos
 Los resultados deberian ser correctos.''',
     'shoulddeal': 'Esta configuracion deberia hacer %s de daño',
-    'withoutcrit': '> %s Daño sin critico',
-    'noroute': '''It\'s impossible for you to reach 100%% crit chance.
-Level up your combat and get more talismans before trying the optimizer again.'''
+    'withoutcrit': '> %s Daño sin critico'
 }
 
 german = {
