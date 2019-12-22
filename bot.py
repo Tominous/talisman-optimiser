@@ -604,14 +604,24 @@ class Session(skypy.Player):
             embed.add_field(name='Crit Chance', value=math.floor(crit_chance) - self.potion_stats.get('crit chance', 0))
             embed.add_field(name='Crit Damage', value=math.floor(crit_damage))
             embed.add_field(name='\u200b', value=self.localize('shoulddeal', round(damage)), inline=False)
-            embed.add_field(name=self.localize('withoutcrit', round(non_crit)), value='\u200b ', inline=False)
+            embed.add_field(name=self.localize('withoutcrit', round(non_crit)), value='\u200b', inline=False)
             await self.user.send(embed=embed)
 
-        await display_result('Best Route', best_route, best_str, best_cc, best_cd, best,
-                             skypy.damage(weapon_damage, best_str, 0, self.enchantment_modifier)
-                             )
+        if best_route:
+            await display_result('Best Route', best_route, best_str, best_cc, best_cd, best,
+                                 skypy.damage(weapon_damage, best_str, 0, self.enchantment_modifier)
+                                 )
+        else:
+            await self.user.send(embed=discord.Embed(
+                title='Best Route',
+                color=discord.Color.orange()
+            ).add_field(
+                name='\u200b',
+                value=self.localize('noroute')
+            ))
 
         # Calculates the spread using the current meta
+        '''
         c, u, r, e, l = [v for k, v in counts.items()]
         u_needed = min(u, (100 - base_cc) // 2)
         c_needed = min(c, (100 - base_cc) - u_needed * 2)
@@ -633,7 +643,7 @@ class Session(skypy.Player):
         await display_result('Current Meta', meta_route, strength, crit_chance, crit_damage, meta_damage,
                              skypy.damage(weapon_damage, strength, 0, self.enchantment_modifier)
                              )
-
+        '''
         '''
         for modifier in self.stat_modifiers():
             modifier(stats)
@@ -657,7 +667,8 @@ server_languages = {
     652148034448261150: {'channel': 657398578431393852, 'language': english},  # main server
     651266868685832193: {'channel': 652329734201540620, 'language': spanish},  # sb hispanic
     604420816817356822: {'channel': 657439787053219842, 'language': english},  # skyborn
-    554389777055612949: {'channel': 657532302988935170, 'language': german} # altpapier
+    554389777055612949: {'channel': 657532302988935170, 'language': german}, # altpapier
+    636691537673060430: {'channel': 658070418938134568, 'language': french} # sb fr
 }
 
 channel_whitelist = [lang['channel'] for lang in server_languages.values()]
@@ -694,7 +705,10 @@ class Bot(discord.Client):
             elif message.guild.id in server_languages:
                 await message.delete()
                 if self.last_warning:
-                    await self.last_warning.delete()
+                    try:
+                        await self.last_warning.delete()
+                    except discord.HTTPException:
+                        pass
                 ch = self.get_channel(server_languages[message.guild.id]['channel']).mention
                 self.last_warning = await message.channel.send(f'{message.author.mention} please do not ping me here. Use {ch} instead')
             else:

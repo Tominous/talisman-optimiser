@@ -240,6 +240,8 @@ class Player:
                 self.profiles[v['cute_name']] = k
         except (KeyError, TypeError):
             raise NeverPlayedSkyblockError from None
+        if not self.profiles:
+            raise NeverPlayedSkyblockError
 
     def __call_api__(self, endpoint):
         base_url = 'https://api.hypixel.net'
@@ -272,19 +274,22 @@ class Player:
             v = self.__api_data__
 
             def parse_collections(data):
-                tuples = []
-                for s in v[data]:
-                    temp = re.split('_(?!.*_)', s, maxsplit=1)
-                    temp[1] = int(temp[1])
-                    tuples.append(temp)
-                dictionary = {}
-                for s in set(name for name, level in tuples):
-                    max = 0
-                    for name, level in tuples:
-                        if name == s and level > max:
-                            max = level
-                    dictionary[s.lower().replace('_', ' ')] = max
-                return dictionary
+                try:
+                    tuples = []
+                    for s in v[data]:
+                        temp = re.split('_(?!.*_)', s, maxsplit=1)
+                        temp[1] = int(temp[1])
+                        tuples.append(temp)
+                    dictionary = {}
+                    for s in set(name for name, level in tuples):
+                        max = 0
+                        for name, level in tuples:
+                            if name == s and level > max:
+                                max = level
+                        dictionary[s.lower().replace('_', ' ')] = max
+                    return dictionary
+                except KeyError:
+                    return {}
 
             self.collections = {name.lower().replace('_', ' '): level for name, level in v['collection'].items()}
             self.unlocked_collections = parse_collections('unlocked_coll_tiers')
@@ -333,8 +338,8 @@ class Player:
                         active_talismen_names.append(tali.internal_name())
 
             self.join_date = datetime.fromtimestamp(v['first_join'] / 1000.0)
-            self.fairy_souls_collected = v['fairy_souls_collected']
-            self.purse = float(v['coin_purse'])
+            self.fairy_souls_collected = v.get('fairy_souls_collected', 0)
+            self.purse = float(v.get('coin_purse', 0))
 
             self.kills = int(v['stats']['kills'])
             self.specifc_kills = {name.replace('kills_', '').replace('_', ' '): int(amount)

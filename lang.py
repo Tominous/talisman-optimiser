@@ -86,7 +86,9 @@ Coloca una en tu inventario e intenta de nuevo''',
 el Scorpion Foil o la Reaper Falchion no estan incluidos
 Los resultados deberian ser correctos.''',
     'shoulddeal': 'Esta configuracion deberia hacer %s de daño',
-    'withoutcrit': '> %s Daño sin critico'
+    'withoutcrit': '> %s Daño sin critico',
+    'noroute': '''It\'s impossible for you to reach 100%% crit chance.
+Level up your combat and get more talismans before trying the optimizer again.'''
 }
 
 german = {
@@ -134,3 +136,47 @@ Talisman Ergebnisse sollten trotzdem korrekt sein.''',
     'withoutcrit': '> %s ohne crit'  # round(non_crit)
 }
 
+french = {
+    'yes': 'oui',
+    'no': 'non',
+    'primer': 'Avant de commencer:',
+    'rule1': 'Équiper votre armure avant de commencer',
+    'rule2': 'Mettez tous vos talismans dans votre inventaire ou accessory bag',
+    'rule3': 'Activer votre api skyblock [skyblock menu > settings > api settings]',
+    'rule4': 'Déconnecter vous d\'hypixel et reconnecter vous pour synchroniser',
+    'welcome': 'Salut %s!\nBienvenue sur notnotmelon\'s talisman optimizer!',  # self.user.mention
+    'username?': 'Qu\'elle est votre pseudo Minecraft?',
+    'unameaccept': 'Pseudo accepter',
+    'neverplayedsb': 'Vous n\'avez jamais joué au skyblock! Réessayer',
+    'invaliduname': 'Pseudo invalide! Réessayer',
+    'profile?': 'Quel profil souhaitez-vous utiliser?',
+    'sortbydate': '(Trié par date de création)',
+    'apidisabled': 'Vos paramètres API sont (probablement) désactivés!',
+    'reenable': 'Réactivez-les avec [skyblock menu > settings > api settings]',
+    'thisappearsif': 'Parfois, ce message apparaît même si vos paramètres API sont activés. Si tel est le cas, quittez Hypixel et réessayez. Il est également possible que les serveurs API d\'Hypixel soient en panne.',
+    'chooselisted': 'Choisissez l\'un des profils ',
+    'unnecessary': 'Vous avez des talismen inutiles!',
+    'noweapon': 'Vous ne portez aucune arme!\nPlacez-en un dans votre inventaire et réessayez',
+    'weapon?': 'Quelle arme voulez-vous utiliser?',
+    'usenameornumber': 'Entrez le nom ou le numéro de l\'arme',
+    'profileaccepted': 'Profil accepté!',
+    'correctequip?': 'Est-ce le bon équipement? [OUI/NON]',
+    'ansy/n': 'Veuillez répondre par OUI ou NON',
+    'potion?': 'Utilisez-vous une potion de %s avec cette version? [OUI/NON]',  # potion_name
+    'potionlvl?': 'Quel niveau de potion de %s utilisez-vous?',  # damaging_potions[self.potion_id]["name"]
+    'enternumb': 'Réponse invalide! Entrez un nombre',
+    'critgoal?': '''Vous avez indiqué que vous ne souhaitez pas utiliser les potions de critiques
+Voulez-vous quand même avoir 80%  de chances de critique? [OUI/NO]''',
+    'overflux': 'J\'ai détecté une overflux orb. Dois-je inclure cela dans les calculs? [OUI/NON]',
+    'manaflux': 'J\'ai détecté une mana flux orb. Dois-je inclure cela dans les calculs? [YES/NO]',
+    'tuba': 'J\'ai détecté un weird tuba. Dois-je inclure cela dans les calculs? [YES/NO]',
+    'target?': 'Quelle monstre ciblerez-vous avec cette configuration?',
+    'pickactivities': 'Réponse invalide! Choisissez l\'une des activités',
+    'algstarted': 'S\'il vous plaît, attendez. Vos résultats seront envoyés sous peu...',
+    'finished': 'Les calculs sont terminés!',
+    'disclaimer': '''Multiplicateurs de dégâts des armes telles que
+le scorpion foil ou la reaper falchion ne sont pas inclus.
+Les résultats de Talisman devraient toujours être corrects.''',
+    'shoulddeal': 'Cette configuration devrait infliger %s de dégâts',  # round(damage)
+    'withoutcrit': '> %s Sans critiques'  # round(non_crit)
+}
