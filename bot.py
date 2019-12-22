@@ -173,7 +173,10 @@ class Session(skypy.Player):
         self.f = self.greet
 
     def localize(self, text_name, *args):
-        return (self.language.get(text_name, None) or english[text_name]) % args
+        if text_name in self.language:
+            return self.language[text_name] % args
+        else:
+            return english[text_name] % args
 
     async def advance(self, message):
         self.f = await self.f(message)
