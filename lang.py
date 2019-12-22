@@ -166,7 +166,7 @@ french = {
     'potionlvl?': 'Quel niveau de potion de %s utilisez-vous?',  # damaging_potions[self.potion_id]["name"]
     'enternumb': 'Réponse invalide! Entrez un nombre',
     'critgoal?': '''Vous avez indiqué que vous ne souhaitez pas utiliser les potions de critiques
-Voulez-vous quand même avoir 80%  de chances de critique? [OUI/NO]''',
+Voulez-vous quand même avoir 80%% de chances de critique? [OUI/NO]''',
     'overflux': 'J\'ai détecté une overflux orb. Dois-je inclure cela dans les calculs? [OUI/NON]',
     'manaflux': 'J\'ai détecté une mana flux orb. Dois-je inclure cela dans les calculs? [YES/NO]',
     'tuba': 'J\'ai détecté un weird tuba. Dois-je inclure cela dans les calculs? [YES/NO]',
