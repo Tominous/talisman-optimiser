@@ -681,7 +681,11 @@ class Bot(discord.Client):
 
     async def log(self, *message):
         print(*message)
-        await self.log_channel.send(' '.join(message))
+        try:
+            await self.log_channel.send(' '.join(message))
+        except AttributeError:
+            self.log_channel = self.get_channel(654753097897213953)
+            self.log(*message)
 
     async def on_ready(self):
         self.log_channel = self.get_channel(654753097897213953)
