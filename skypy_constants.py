@@ -1,3 +1,42 @@
+sword_enchants = [
+    'sharpness',
+    'crticial',
+    'ender_slayer',
+    'execute',
+    'first_strike',
+    'giant_killer',
+    'lethality',
+    'life_steal',
+    'looting',
+    'luck',
+    'scavenger',
+    'vampirism',
+    'bane_of_arthropods',
+    'smite'
+]
+
+bow_enchants = [
+    'power',
+    'aiming',
+    'dragon_hunter',
+    'infinite_quiver',
+    'power',
+    'snipe',
+    'punch',
+    'flame',
+    'piercing'
+]
+
+rod_enchants = [
+    'angler',
+    'blessing',
+    'caster',
+    'frail',
+    'luck_of_the_sea',
+    'lure',
+    'magnet'
+]
+
 skill_rewards = {
     'foraging': {
         0: {
@@ -29,7 +68,7 @@ slayer_rewards = {
 }
 
 fairy_soul_hp_bonus = [3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16,
-                       17, 17, 18, 18, 19, 19, 20, 20, 21]
+                       17, 17, 18, 18, 19, 19, 20, 20, 21, 21]
 
 skill_exp_requirements = [50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000,
                           7500, 10000, 15000, 20000, 30000, 50000, 75000, 100000, 200000, 300000,

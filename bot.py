@@ -15,7 +15,7 @@ import discord
 import skypy
 from skypy import SkyblockError
 import traceback
-from itertools import product
+from itertools import product, chain
 import math
 
 if os.environ.get('API_KEY') is None:
@@ -220,7 +220,7 @@ class Session(skypy.Player):
                 description=self.localize('sortbydate'),
                 color=discord.Color.gold()
             )
-            embed.add_field(name='\u200b', value='\n\n'.join(self.profiles.keys()))
+            embed.add_field(name='\u200b', value='\n\n'.join(self.profiles.keys() or 'You have no profiles? Please report this'))
             await self.user.send(embed=embed)
             return self.collect_profile
 
@@ -250,11 +250,11 @@ class Session(skypy.Player):
 
     async def display_talisman_warnings(self, message):
         bad = []
-        names = [tali.internal_name() for tali in self.active_talismen]
+        names = [tali.internal_name for tali in self.active_talismen]
         for tali in self.inventory + self.talisman_bag:
-            if tali.classifier() == 'accessory':
-                if tali.internal_name() not in names:
-                    bad.append(tali.name())
+            if tali.type == 'accessory':
+                if tali.internal_name not in names:
+                    bad.append(tali.name)
         if bad:
             await self.user.send(
                 embed=discord.Embed(
@@ -281,26 +281,24 @@ class Session(skypy.Player):
             for i, weapon in enumerate(self.weapons):
                 embed.add_field(
                     name=f'{i + 1} >',
-                    value=weapon.name(),
+                    value=weapon.name,
                     inline=False
                 )
             await self.user.send(embed=embed)
             return self.collect_weapon
 
     async def collect_weapon(self, message):
-        names = [weapon.name().lower() for weapon in self.weapons]
+        names = [weapon.name.lower() for weapon in self.weapons]
         content = message.content.lower()
         if content in names:
             self.weapon = self.weapons[names.index(content)]
             return await self.test_profile(message)
-        elif content.isnumeric():
+        else:
             try:
                 self.weapon = self.weapons[int(content) - 1]
-            except IndexError:
+            except (IndexError, TypeError, ValueError):
                 return await self.ask_weapon(message)
             return await self.test_profile(message)
-        else:
-            return await self.ask_weapon(message)
 
     async def test_profile(self, message):
         embed = discord.Embed(
@@ -309,12 +307,12 @@ class Session(skypy.Player):
             color=discord.Color.magenta()
         ).add_field(
             name='Weapon: ',
-            value=self.weapon.name()
+            value=self.weapon.name
         )
         for piece in ['helmet', 'chestplate', 'leggings', 'boots']:
             embed.add_field(
                 name=piece.capitalize(),
-                value=next((a.name() for a in self.armor if a.classifier() == piece), None)
+                value=next((a.name for a in self.armor if a.type == piece), None)
             )
         for name, amount in self.talisman_counts().items():
             embed.add_field(name=rarity_grammar(name).capitalize(),
@@ -341,7 +339,7 @@ class Session(skypy.Player):
     async def ask_potion(self, message):
         potion_name = damaging_potions[self.potion_id]['name']
         self.crit = potion_name == 'critical'
-        if potion_name == 'archery' and self.weapon.classifier() != 'bow':
+        if potion_name == 'archery' and self.weapon.type != 'bow':
             return await self.advance_potion(message)
         await self.user.send(self.localize('potion?', potion_name))
         return self.collect_potion
@@ -407,7 +405,7 @@ class Session(skypy.Player):
         self.over = False
         self.tuba = False
         for item in self.inventory + self.echest:
-            name = item.internal_name()
+            name = item.internal_name
             if name == 'WEIRD_TUBA':
                 self.tuba = True
             elif name == 'OVER_FLUX_POWER_ORB':
@@ -441,9 +439,6 @@ class Session(skypy.Player):
         return await self.ask_orbs(message)
 
     async def ask_enchantment_modifier(self, message):
-        if self.weapon.internal_name() == 'SCORPION_BOW':  # thanks hypixel
-            self.enchantment_modifier = 0
-            return self.calculate_optimal_talismans
         await self.user.send(embed=discord.Embed(
             title=self.localize('target?'),
             color=discord.Color.dark_orange()
@@ -454,7 +449,7 @@ class Session(skypy.Player):
         return self.collect_enchantment_modifier
 
     async def collect_enchantment_modifier(self, message):
-        enchantments = self.weapon.enchantments()
+        enchantments = self.weapon.enchantments
         self.enchantment_modifier = self.skills['combat'] * 4 + self.potion_stats.get('enchantment modifier', 0)
 
         if message.content.title() not in activities:
@@ -473,6 +468,52 @@ class Session(skypy.Player):
         return await self.calculate_optimal_talismans(message)
 
     async def calculate_optimal_talismans(self, message):
+        def apply_stats(additional):
+            for key, value in additional.items():
+                if key != 'enchantment modifier':
+                    stats[key] += value
+
+        stats = self.base_stats()
+        apply_stats(self.fairy_soul_stats())
+        apply_stats(self.armor_stats())
+        apply_stats(self.slayer_stats())
+        apply_stats(self.skill_stats())
+        apply_stats(self.talisman_stats(include_reforges=True))
+        apply_stats(self.weapon.stats())
+        apply_stats(self.potion_stats)
+        weapon_damage = stats['damage']
+
+        stat_modifiers = self.stat_modifiers()
+        str_mod = stat_modifiers.get('strength', lambda x: x)
+        cc_mod = stat_modifiers.get('crit chance', lambda x: x)
+        cd_mod = stat_modifiers.get('crit damage', lambda x, y: x)
+
+        strength = str_mod(stats['strength'])
+        crit_chance = cc_mod(stats['crit chance'])
+        crit_damage = cd_mod(stats['crit damage'], strength)
+
+        await self.user.send(embed=discord.Embed(
+            title=self.localize('currsetup'),
+            color=discord.Color.orange(),
+        ).add_field(
+            name='Strength',
+            value=math.floor(strength)
+        ).add_field(
+            name='Crit Chance',
+            value=math.floor(crit_chance) - self.potion_stats.get('crit chance', 0)
+        ).add_field(
+            name='Crit Damage',
+            value=math.floor(crit_damage)
+        ).add_field(
+            name='\u200b',
+            value=self.localize('shoulddeal', round(skypy.damage(weapon_damage, strength, crit_damage, self.enchantment_modifier))),
+            inline=False
+        ).add_field(
+            name=self.localize('withoutcrit', round(skypy.damage(weapon_damage, strength, 0, self.enchantment_modifier))),
+            value='\u200b',
+            inline=False
+        ))
+
         def routes(count, size, rarity):
             def helper(count, idx, current):
                 if count == 0:
@@ -492,11 +533,6 @@ class Session(skypy.Player):
 
             return helper(count, 0, [0] * size)
 
-        def apply_stats(additional):
-            for key, value in additional.items():
-                if key != 'enchantment modifier':
-                    stats[key] += value
-
         stats = self.base_stats()
         apply_stats(self.fairy_soul_stats())
         apply_stats(self.armor_stats())
@@ -506,7 +542,6 @@ class Session(skypy.Player):
         apply_stats(self.weapon.stats())
         apply_stats(self.potion_stats)
 
-        weapon_damage = stats['damage']
         base_str = stats['strength']
         base_cc = stats['crit chance']
         base_cd = stats['crit damage']
@@ -521,11 +556,6 @@ class Session(skypy.Player):
         best_str = 0
         best_cc = 0
         best_cd = 0
-
-        stat_modifiers = self.stat_modifiers()
-        str_mod = stat_modifiers.get('strength', lambda x: x)
-        cc_mod = stat_modifiers.get('crit chance', lambda x: x)
-        cd_mod = stat_modifiers.get('crit damage', lambda x, y: x)
 
         if cc_mod(base_cc) <= 100:
             cc_mod = stat_modifiers.get('crit chance', None)
@@ -664,14 +694,22 @@ sessions = {
 from lang import *
 
 server_languages = {
-    652148034448261150: {'channel': 657398578431393852, 'language': english},  # main server
+    652148034448261150: {
+        657398578431393852: english,
+        658711562143662080: french,
+        658711589511233557: german,
+        658711683790929950: spanish,
+        658711612235972629: polish,
+        659950470785138737: hebrew
+    },  # main server
     651266868685832193: {'channel': 652329734201540620, 'language': spanish},  # sb hispanic
     604420816817356822: {'channel': 657439787053219842, 'language': english},  # skyborn
     554389777055612949: {'channel': 657532302988935170, 'language': german}, # altpapier
-    636691537673060430: {'channel': 658070418938134568, 'language': french} # sb fr
+    636691537673060430: {'channel': 658070418938134568, 'language': french}, # sb fr
+    650438966041903115: {'channel': 650439295894683681, 'language': french} # axegaming
 }
 
-channel_whitelist = [lang['channel'] for lang in server_languages.values()]
+channel_whitelist = list(chain.from_iterable([lang['channel']] if 'channel' in lang else list(lang.keys()) for lang in server_languages.values()))
 
 class Bot(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -681,11 +719,7 @@ class Bot(discord.Client):
 
     async def log(self, *message):
         print(*message)
-        try:
-            await self.log_channel.send(' '.join(message))
-        except AttributeError:
-            self.log_channel = self.get_channel(654753097897213953)
-            self.log(*message)
+        await self.log_channel.send(' '.join(message))
 
     async def on_ready(self):
         self.log_channel = self.get_channel(654753097897213953)
@@ -697,12 +731,16 @@ class Bot(discord.Client):
         if user.bot:
             return
 
-        def updates():
-            return os.getenv('ENV') != 'server' and user != self.get_user(notnotmelon)
-
         async def start_session(guild):
             if guild is False or message.channel.id in channel_whitelist:
-                language = server_languages[message.guild.id]['language'] if guild else english
+                if guild:
+                    language = server_languages[message.guild.id]
+                    if 'channel' in language and 'language' in language:
+                        language = language['language']
+                    else:
+                        language = language[message.channel.id]
+                else:
+                    language = english
                 await self.log(f'Starting session with {user} in server {message.guild}')
                 self.sessions[user] = Session(self, user, language)
                 await reply()
@@ -713,10 +751,13 @@ class Bot(discord.Client):
                         await self.last_warning.delete()
                     except discord.HTTPException:
                         pass
-                ch = self.get_channel(server_languages[message.guild.id]['channel']).mention
+                lang = server_languages[message.guild.id]
+                ch = self.get_channel(lang['channel'] if 'channel' in lang else list(lang.keys())[0]).mention
                 self.last_warning = await message.channel.send(f'{message.author.mention} please do not ping me here. Use {ch} instead')
             else:
-                await message.channel.send('This server is not authorized! If you are the server owner, send my boss a DM at notnotmelon#7218')
+                await self.log(f'Starting session with {user} in unlocalized server {message.guild}')
+                self.sessions[user] = Session(self, user, english)
+                await reply()
 
         async def end_session():
             await self.log(f'Session ended with {user}')
@@ -740,9 +781,6 @@ class Bot(discord.Client):
 
         m = message.content.lower()
         if message.channel == user.dm_channel:
-            if updates():
-                await message.channel.send('The bot is currently down for updates, please check back later :(')
-                return
             if user not in self.sessions.keys():
                 await start_session(guild=False)
             elif m == 'exit':
@@ -751,10 +789,7 @@ class Bot(discord.Client):
             else:
                 await reply()
         elif self.user in message.mentions:
-            if updates():
-                await message.channel.send('The bot is currently down for updates, please check back later :(')
-            else:
-                await start_session(guild=True)
+            await start_session(guild=True)
 
 
 client = Bot()

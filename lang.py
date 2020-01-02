@@ -1,3 +1,5 @@
+# note to translators: if you want to use the symbol % in your translation, please add another % afterward to make %% or it will bug
+
 english = {
     'yes': 'yes',
     'no': 'no',
@@ -27,7 +29,7 @@ english = {
     'potion?': 'Do you use %s pots with this build? [YES/NO]',  # potion_name
     'potionlvl?': 'Which level of %s potions do you use?',  # damaging_potions[self.potion_id]["name"]
     'enternumb': 'Invalid response! Enter a number',
-    'critgoal?': '''You indicated that you want don\'t want to use crit pots
+    'critgoal?': '''You indicated that you don\'t want to use crit pots
 Do you want to have 80 crit chance anyway? [YES/NO]''',
     'overflux': 'I detected an overflux orb. Should I include that in the calculations? [YES/NO]',
     'manaflux': 'I detected a mana flux orb. Should I include that in the calculations? [YES/NO]',
@@ -42,7 +44,8 @@ Talisman results should still be correct.''',
     'shoulddeal': 'This setup should deal %s damage',  # round(damage)
     'withoutcrit': '> %s without crit',  # round(non_crit)
     'noroute': '''It\'s impossible for you to reach 100%% crit chance.
-Level up your combat and get more talismans before trying the optimizer again.'''
+Level up your combat and get more talismans before trying the optimizer again.''',
+    'currsetup': 'Current Setup'
 }
 
 spanish = {
@@ -98,7 +101,7 @@ german = {
     'rule1': 'Ziehe die Rüstung an, mit der du deine Talismane optimieren möchtest',
     'rule2': 'Lege alle Talismane in dein Inventar oder in den Talisman Bag',
     'rule3': 'Aktiviere deine Skyblock API Einstellungen [skyblock menu > settings > api settings]',
-    'rule4': 'Melden dich von Hypixel ab, damit die API synchronisiert wird',
+    'rule4': 'Melde dich von Hypixel ab, damit die API synchronisiert wird',
     'welcome': 'Hi %s!\nWillkommen zu notnotmelons Talisman Optimizer!',  # self.user.mention
     'username?': 'Was ist dein Minecraft Nutzername?',
     'unameaccept': 'Nutzername akzeptiert',
@@ -121,7 +124,7 @@ german = {
     'potionlvl?': 'Welche Stufe von %s Tränken benutzt du?',  # damaging_potions[self.potion_id]["name"]
     'enternumb': 'Ungültige Antwort! Gebe eine Nummer ein',
     'critgoal?': '''Du hast angegeben, dass du Critical Tränke nicht verwenden möchtest.
-Willst du die 80% Crit Chance trotzdem haben? [JA/NEIN]''',
+Willst du die 80%% Crit Chance trotzdem haben? [JA/NEIN]''',
     'overflux': 'Ich habe einen Overflux orb gefunden. Soll ich den in die Berechnungen einbeziehen?? [JA/NEIN]',
     'manaflux': 'Ich habe einen Mana flux orb gefunden. Soll ich den in die Berechnungen einbeziehen?? [JA/NEIN]',
     'tuba': 'Ich habe eine Weird Tuba gefunden. Soll ich die in die Berechnungen einbeziehen?? [JA/NEIN]',
@@ -154,7 +157,7 @@ french = {
     'apidisabled': 'Vos paramètres API sont (probablement) désactivés!',
     'reenable': 'Réactivez-les avec [skyblock menu > settings > api settings]',
     'thisappearsif': 'Parfois, ce message apparaît même si vos paramètres API sont activés. Si tel est le cas, quittez Hypixel et réessayez. Il est également possible que les serveurs API d\'Hypixel soient en panne.',
-    'chooselisted': 'Choisissez l\'un des profils ',
+    'chooselisted': 'Choisissez l\'un des profils',
     'unnecessary': 'Vous avez des talismen inutiles!',
     'noweapon': 'Vous ne portez aucune arme!\nPlacez-en un dans votre inventaire et réessayez',
     'weapon?': 'Quelle arme voulez-vous utiliser?',
@@ -166,10 +169,10 @@ french = {
     'potionlvl?': 'Quel niveau de potion de %s utilisez-vous?',  # damaging_potions[self.potion_id]["name"]
     'enternumb': 'Réponse invalide! Entrez un nombre',
     'critgoal?': '''Vous avez indiqué que vous ne souhaitez pas utiliser les potions de critiques
-Voulez-vous quand même avoir 80%% de chances de critique? [OUI/NO]''',
+Voulez-vous quand même avoir 80%% de chances de critique? [OUI/NON]''',
     'overflux': 'J\'ai détecté une overflux orb. Dois-je inclure cela dans les calculs? [OUI/NON]',
-    'manaflux': 'J\'ai détecté une mana flux orb. Dois-je inclure cela dans les calculs? [YES/NO]',
-    'tuba': 'J\'ai détecté un weird tuba. Dois-je inclure cela dans les calculs? [YES/NO]',
+    'manaflux': 'J\'ai détecté une mana flux orb. Dois-je inclure cela dans les calculs? [OUI/NON]',
+    'tuba': 'J\'ai détecté un weird tuba. Dois-je inclure cela dans les calculs? [OUI/NON]',
     'target?': 'Quelle monstre ciblerez-vous avec cette configuration?',
     'pickactivities': 'Réponse invalide! Choisissez l\'une des activités',
     'algstarted': 'S\'il vous plaît, attendez. Vos résultats seront envoyés sous peu...',
@@ -179,4 +182,93 @@ le scorpion foil ou la reaper falchion ne sont pas inclus.
 Les résultats de Talisman devraient toujours être corrects.''',
     'shoulddeal': 'Cette configuration devrait infliger %s de dégâts',  # round(damage)
     'withoutcrit': '> %s Sans critiques'  # round(non_crit)
+}
+
+polish = {
+    'yes': 'tak',
+    'no': 'nie',
+    'primer': 'Zanim zaczniesz:',
+    'rule1': 'Załóż zbroję, z którą będziesz optymalizować',
+    'rule2': 'Włóż wszystkie twoje akcesoria do ekwipunku oraz torby z akcesoriami',
+    'rule3': 'Musisz mieć włączony Skyblock API [skyblock menu > settings > api settings]',
+    'rule4': 'Wyjdź z serwera, aby zaaktualizować swój ekwipunek dla API',
+    'welcome': '%s Hej, rozpoczynamy optymalizację! (moim właścicielem jest notnotmelon)',  # self.user.mention
+    'username?': 'Jaki jest twój nick w Minecrafcie?',
+    'unameaccept': 'Aha, znalałem!',
+    'neverplayedsb': 'Hej hej, nie grałeś w Skyblocka na tym koncie! Spróbuj ponownie!',
+    'invaliduname': 'Nie ma cię na liście graczy, spróbuj jeszcze raz',
+    'profile?': 'Więc, jaki profil wybieramy?',
+    'sortbydate': '(Sortuję według daty założenia)',
+    'apidisabled': 'Uhh, API masz wyłączone. Chyba. Spróbuj ponownie?',
+    'reenable': 'Włącz je ponownie z [skyblock menu > settings > api settings]',
+    'thisappearsif': 'Czasem Hypixel potrafi się wykrzaczyć z serwerami API, więc trzeba brać to pod uwagę',
+    'chooselisted': 'Wybierz profil z listy',
+    'unnecessary': 'Masz niepotrzebne talizmany!',
+    'noweapon': 'Nie masz przy sobie broni, włóż tę którą używasz do ekwipunku',
+    'weapon?': 'Jaką broń używasz?',
+    'usenameornumber': 'Wpisz nazwę, bądź numer',
+    'profileaccepted': 'Zaakceptowano!',
+    'correctequip?': 'Czy to właściwy ekwipunek?[TAK/NIE]',
+    'ansy/n': 'przyjmuję tylko tak i nie',
+    'potion?': 'Czu używasz %s potek z tym ekwipunkiem? [TAK/NIE]',  # potion_name
+    'potionlvl?': 'Który poziom %s używasz?',  # damaging_potions[self.potion_id]["name"]
+    'enternumb': 'zła odpowiedź! wprowadź liczbę',
+    'critgoal?': '''Zaznaczyłeś że nie korzystasz z crit potions, czy chcesz mieć 80%% szans na krytyczne trafienie tak czy siak? W innym wypadku będziemy ciągnąć do 100% [TAK/NIE]''',
+    'overflux': 'Wyczuwam overflux orb w twoim ekwipunku, dodać go do kalkulacji? [TAK/NIE]',
+    'manaflux': 'Wyczuwam mana flux orb w twoim ekwipunku, dodać go do kalkulacji?  [TAK/NIE]',
+    'tuba': 'Wyczuwam weird tuba w twoim ekwipunku. Dodać do kalkulacji? [TAK/NIE]',
+    'target?': 'Twój cel do zabijania?',
+    'pickactivities': 'Zła odpowiedź! Wybierz prawidłową aktywność',
+    'algstarted': 'Teraz liczenie, poczekaj nieco... Im więcej talizmanów, tym więcej liczenia',
+    'finished': 'Liczenie zakończone',
+    'disclaimer': '''Kalkulator ignoruje bonusy typu +ileś% do obrażeń przeciw zombie ''',
+    'shoulddeal': 'Powninieneś zadawać %s obrażeń',  # round(damage)
+    'withoutcrit': '> %s bez krytyków',  # round(non_crit)
+    'noroute': '''Nie masz szans aby zdobyć obecnie 100%% szansy na uderzenie krytyczne. Zwiększ liczbę talizmanów, jak i poziom walki i spróbuj ponownie'''
+}
+
+hebrew = {
+    'yes': 'כן',
+    'no': 'לא',
+    'primer': 'לפני שאתה מתחיל:',
+    'rule1': 'שים עליך את השריון שאתה רוצה להוציא את המיטב ממנו',
+    'rule2': 'שים את כל הטליסמנים שלך באינבנטורי או בתיק האביזרים',
+    'rule3': 'תפעיל את skyblock API settings [skyblock menu > settings > api settings]',
+    'rule4': 'Log out of Hypixel so that the API syncs',
+    'welcome': 'שלום %s!\nברוך הבא ל notnotmelon\'s talisman optimizer!',  # self.user.mention
+    'username?': 'מה שמך במיינקראפט?',
+    'unameaccept': 'שמך אושר',
+    'neverplayedsb': 'אף פעם שיחקת בסקיי בלוק! נסה שוב',
+    'invaliduname': 'שמך שגוי! נסה שוב',
+    'profile?': 'באיזה פרופיל אתה רוצה להשתמש?',
+    'sortbydate': '(ממוין לפי תאריך שנוצר)',
+    'apidisabled': 'Your API settings (כנראה) לא מופעלים!',
+    'reenable': 'תפעיל אותם שוב עם [skyblock menu > settings > api settings]',
+    'thisappearsif': 'לפעמים הודעה זאת מופיעה גם כאשר API settings  פועלים. אם כך, תצא מהייפיקסל ונסה שנית. זה גם אפשרי שהשרתים של ה API של הייפיקסל מכובים. ',
+    'chooselisted': ',תבחר אחד מהפרופילים שהוצגו',
+    'unnecessary': 'יש לך טליסמן לא נחוץ!',
+    'noweapon': 'אין עליך שום נשק!\nשים אחד באינבנטורי ונסה שנית',
+    'weapon?': 'איזה נשק תרצה לבדוק?',
+    'usenameornumber': 'תרשום את השם של הנשק או מספרו בטבלה',
+    'profileaccepted': 'פרופיל אושר!',
+    'correctequip?': 'האם זה הציוד הנכון? [כן/לא]',
+    'ansy/n': 'בבקשה תענה עם כן או לא',
+    'potion?': 'האם אתה משתמש %s שיקוי עם הסט הזה? [כן/לא]',  # potion_name
+    'potionlvl?': 'איזה רמה של %s שיקוי אתה משתמש?',  # damaging_potions[self.potion_id]["name"]
+    'enternumb': 'שגיאה! תרשום מספר',
+    'critgoal?': '''אתה מתכוון להשתמש או לא להשתמש בשיקוי crit?
+האם אתה רוצה שיהיה לך 80% crit בכל מקרה? [ כן/לא]''',
+    'overflux': 'גיליתי שאתה משתמש ב overflux orb. להכניס אותו לחישובים? [כן/לא]',
+    'manaflux': 'גיליתי שאתה משתמש mana flux orb. להכניס אותו לחישובים? [כן/לא]',
+    'tuba': 'גיליתי שאתה משתמש weird tuba. להכניס אותה לחישובים? [כן/לא]',
+    'target?': 'על איזה סוג מוב אתה מכוון את הבסיס?',
+    'pickactivities': 'שגיאה! תבחר אחד מהאופציות',
+    'algstarted': 'חכה בבקשה. התאמתך תשלח בקרוב...',
+    'finished': 'החישובים הושלמו!',
+    'disclaimer': '''תוספת כוח מנשקים מסוימים לא נכללת בחישוב כגון scorpion foil או reaper falchion.
+החישוב  אמור להשאר נכון.''',
+    'shoulddeal': 'הסט הזה אמור להוריד %s damage',  # round(damage)
+    'withoutcrit': '> %s בלי crit',  # round(non_crit)
+    'noroute': '''אתה לא יכול כרגע להשיג 100%% crit chance.
+תשפר את רמת ה combat שלך ותשיג עוד טליסמנס לפני שאתה מתחיל חישוב חדש.'''
 }
