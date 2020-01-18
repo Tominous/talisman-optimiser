@@ -133,7 +133,7 @@ activities = {
 relavant_reforges = {
     'forceful': (None, None, (7, 0, 0), (10, 0, 0), (15, 0, 0)),
     'itchy': ((1, 0, 3), (2, 0, 5), (2, 0, 8), (3, 0, 12), (5, 0, 15)),
-    # 'unpleasant': ((0, 1, 1), None, (0, 3, 2), (0, 6, 3), (0, 8, 5)), -- too laggy not worth keeping
+     'unpleasant': ((0, 1, 1), None, (0, 3, 2), (0, 6, 3), (0, 8, 5)), -- too laggy not worth keeping
     'strong': (None, None, (4, 0, 4), (7, 0, 7), (10, 0, 10)),
     'godly': ((1, 1, 1), (2, 2, 2), (4, 2, 3), (7, 3, 6), (10, 5, 8))
 }
