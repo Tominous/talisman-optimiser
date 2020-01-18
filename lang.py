@@ -4,11 +4,11 @@ english = {
     'yes': 'yes',
     'no': 'no',
     'primer': 'Before you start:',
-    'rule1': 'Put the armor on that you will optimize with',
+    'rule1': 'Put the armour on that you will optimise with',
     'rule2': 'Put all your talismen in your inventory or talisman bag',
     'rule3': 'Enable your skyblock API settings [skyblock menu > settings > api settings]',
     'rule4': 'Log out of Hypixel so that the API syncs',
-    'welcome': 'Hi %s!\nWelcome to notnotmelon\'s talisman optimizer!',  # self.user.mention
+    'welcome': 'Hi %s!\nWelcome to notnotmelon\'s talisman optimiser!',  # self.user.mention
     'username?': 'What is your minecraft username?',
     'unameaccept': 'Username accepted',
     'neverplayedsb': 'You have never played skyblock! Try again',
@@ -44,7 +44,7 @@ Talisman results should still be correct.''',
     'shoulddeal': 'This setup should deal %s damage',  # round(damage)
     'withoutcrit': '> %s without crit',  # round(non_crit)
     'noroute': '''It\'s impossible for you to reach 100%% crit chance.
-Level up your combat and get more talismans before trying the optimizer again.''',
+Level up your combat and get more talismans before trying the optimiser again.''',
     'currsetup': 'Current Setup'
 }
 
