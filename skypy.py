@@ -174,7 +174,7 @@ class Item:
             add('defense', 2.5)
         elif name == 'CAKE_BAG':
             print(self.__nbt__)
-            # add('health', len(decode_inventory_data(self[][][])))
+             add('health', len(decode_inventory_data(self[][][])))
             pass
         elif name == 'GRAVITY_TALISMAN':
             add('strength', 10)
